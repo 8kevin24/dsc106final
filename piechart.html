@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>What causes in-hospital fatalities?</h1>
+
+    <div id="controls">
+        <div id="ageSliderContainer">
+            <label>Age:</label>
+            <div id="ageSlider"></div>
+            <span id="ageMinValue"></span> - <span id="ageMaxValue"></span>
+        </div>
+
+        <div id="heightSliderContanier">
+            <label>Height:</label>
+            <div id="heightSlider"></div>
+            <span id="heightMinValue"></span> - <span id="heightMaxValue"></span>
+        </div>
+
+        <div id="weightSliderContanier">
+            <label>Weight:</label>
+            <div id="weightSlider"></div>
+            <span id="weightMinValue"></span> - <span id="weightMaxValue"></span>
+        </div>
+    </div>
+    <div id="piechart"></div>
+    
+    <!-- 引入 noUiSlider 樣式與 JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
+
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="main.js" type="module"></script>
+
+    <div id="menu-container"></div> 
+</body>
+</html>
