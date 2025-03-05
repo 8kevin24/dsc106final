@@ -1,0 +1,154 @@
+body{
+    background-color: #E8F5E9;
+    height: 100vh; /* Set the height to fit the viewport */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 50px;
+}
+
+/* General chart container */
+#chart {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.90); /*Shrinks the entire chart*/
+}
+
+/* X & Y axis text styling */
+.axis text {
+    fill: #00ffaa; /* Neon cyan */
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+}
+
+.y-axis-label {
+    font-family: Arial, sans-serif;  /* Set font to Arial */
+}
+
+
+/* Axis lines */
+.axis path, .axis line {
+    stroke: #00ffaa;
+    stroke-width: 1;
+}
+
+/* Grid lines */
+.grid line {
+    stroke: #00ffaa;
+    stroke-opacity: 0.2;
+}
+
+.grid path {
+    stroke: none;
+}
+
+/* Scatter points */
+.dot {
+    fill: #ff007f; /* Neon pink */
+    stroke: white;
+    stroke-width: 1.5;
+    opacity: 0.8;
+    transition: transform 0.2s ease-in-out, opacity 0.2s;
+}
+
+/* Hover effect on scatter points */
+.dot:hover {
+    opacity: 1;
+    transform: scale(1.5);
+    stroke: #00ffaa;
+    stroke-width: 2;
+}
+
+.gridlines line {
+    stroke: #ccc; /* Light gray */
+    stroke-opacity: 0.5; /* Make it subtle */
+    shape-rendering: crispEdges;
+}
+
+.gridlines path {
+    stroke: none;
+}
+
+
+/* Move the dropdown menu to the right */
+
+#menu-container {
+    display: flex;           /* Align dropdowns in a row */
+    justify-content: center; 
+    margin-top: 10px;
+    position: relative; 
+    gap: 15px; /* Adds space between dropdowns */
+}
+
+#menu-container select{
+    background-color: rgb(255, 255, 255);
+}
+
+
+#menu-container_dead_or_alive {
+    position: absolute;      /* Position it relative to its nearest positioned ancestor */
+    top: 10px;              /* Distance from the top */
+    right: 10px;            /* Distance from the right */
+    z-index: 1000;          /* Ensure it appears above other elements if needed */
+    
+}
+
+#menu-container_dead_or_alive select{
+    background-color: rgb(212, 237, 215);
+    
+}
+
+
+
+.dropdown-item{
+    padding-left:3em;
+    padding-right:3em;
+}
+
+circle[data-label="patient"] {
+    transition: transform 200ms ease-in-out;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  
+circle[data-label="patient"]:hover {
+    transform: scale(1.5);
+    fill: #fdb750; /* Optional: Change color on hover */
+  }
+
+#patient-tooltip {
+    position: fixed;
+    top: 1em;
+    left: 1em;
+    background: oklch(97.01% 0.03 90.3);
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    pointer-events: none; /* Prevents cursor interference */
+    
+    transition: opacity 200ms ease-in-out;
+    border: 2px solid rgb(138, 97, 0);
+}
+
+.legend-container {
+    font-family: Arial, sans-serif;
+}
+
+#github-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-decoration: none;
+    color: gray; /* Change color to make it less prominent */
+    font-size: 12px; /* Smaller font size */
+}
+
+#github-link:hover {
+    color: blue; /* Change color on hover for visibility */
+}
