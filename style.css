@@ -1,154 +1,193 @@
-body{
-    background-color: #E8F5E9;
-    height: 100vh; /* Set the height to fit the viewport */
-    overflow: hidden; /* Prevent scrolling */
-}
-
-h1{
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 50px;
-}
-
-/* General chart container */
-#chart {
-    margin-top: 60px;
-    display: flex;
-    justify-content: center;
+body {
+ 
     align-items: center;
-    transform: scale(0.90); /*Shrinks the entire chart*/
-}
-
-/* X & Y axis text styling */
-.axis text {
-    fill: #00ffaa; /* Neon cyan */
-    font-size: 14px;
-    font-family: 'Arial', sans-serif;
-}
-
-.y-axis-label {
-    font-family: Arial, sans-serif;  /* Set font to Arial */
-}
-
-
-/* Axis lines */
-.axis path, .axis line {
-    stroke: #00ffaa;
-    stroke-width: 1;
-}
-
-/* Grid lines */
-.grid line {
-    stroke: #00ffaa;
-    stroke-opacity: 0.2;
-}
-
-.grid path {
-    stroke: none;
-}
-
-/* Scatter points */
-.dot {
-    fill: #ff007f; /* Neon pink */
-    stroke: white;
-    stroke-width: 1.5;
-    opacity: 0.8;
-    transition: transform 0.2s ease-in-out, opacity 0.2s;
-}
-
-/* Hover effect on scatter points */
-.dot:hover {
-    opacity: 1;
-    transform: scale(1.5);
-    stroke: #00ffaa;
-    stroke-width: 2;
-}
-
-.gridlines line {
-    stroke: #ccc; /* Light gray */
-    stroke-opacity: 0.5; /* Make it subtle */
-    shape-rendering: crispEdges;
-}
-
-.gridlines path {
-    stroke: none;
-}
-
-
-/* Move the dropdown menu to the right */
-
-#menu-container {
-    display: flex;           /* Align dropdowns in a row */
-    justify-content: center; 
-    margin-top: 10px;
-    position: relative; 
-    gap: 15px; /* Adds space between dropdowns */
-}
-
-#menu-container select{
-    background-color: rgb(255, 255, 255);
-}
-
-
-#menu-container_dead_or_alive {
-    position: absolute;      /* Position it relative to its nearest positioned ancestor */
-    top: 10px;              /* Distance from the top */
-    right: 10px;            /* Distance from the right */
-    z-index: 1000;          /* Ensure it appears above other elements if needed */
-    
-}
-
-#menu-container_dead_or_alive select{
-    background-color: rgb(212, 237, 215);
-    
-}
-
-
-
-.dropdown-item{
-    padding-left:3em;
-    padding-right:3em;
-}
-
-circle[data-label="patient"] {
-    transition: transform 200ms ease-in-out;
-    transform-origin: center;
-    transform-box: fill-box;
-  }
-  
-circle[data-label="patient"]:hover {
-    transform: scale(1.5);
-    fill: #fdb750; /* Optional: Change color on hover */
-  }
-
-#patient-tooltip {
-    position: fixed;
-    top: 1em;
-    left: 1em;
-    background: oklch(97.01% 0.03 90.3);
-    color: black;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    pointer-events: none; /* Prevents cursor interference */
-    
-    transition: opacity 200ms ease-in-out;
-    border: 2px solid rgb(138, 97, 0);
-}
-
-.legend-container {
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(180deg, #03baf7 0%, #E0F7FA 100%);
     font-family: Arial, sans-serif;
 }
-
-#github-link {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    text-decoration: none;
-    color: gray; /* Change color to make it less prominent */
-    font-size: 12px; /* Smaller font size */
+h1 {
+    text-align: center;
+}
+#gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 20px;
+    height: 100%;
 }
 
-#github-link:hover {
-    color: blue; /* Change color on hover for visibility */
+.box {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#controlsContainer {
+    width: 100%;
+}
+
+/* Styling for each slider box */
+.sliderBox {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px; /* More padding for better alignment */
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensures content stretches evenly */
+    min-height: 80px; /* Allows content to expand properly */
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
+}
+
+/* Make sure labels are aligned left */
+.sliderBox label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+    align-self: flex-start;
+}
+
+/* Styling for noUiSlider */
+/* Ensures the sliders fit properly */
+.noUi-target {
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.noUi-connect {
+    background: #007bff; /* Active range color */
+}
+
+.noUi-handle {
+    border: 2px solid #007bff;
+    background-color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    z-index: 5;
+}
+
+/* Move tooltip below the slider handle */
+.noUi-tooltip {
+    font-size: 14px;
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 10;
+}
+
+/* Fix position of the tooltip so it stays below */
+.noUi-horizontal .noUi-handle-lower .noUi-tooltip,
+.noUi-horizontal .noUi-handle-upper .noUi-tooltip {
+    bottom: -0px !important; /* Move tooltip below the handle */
+    top: auto !important; /* Remove default top positioning */
+}
+
+
+
+/* Styling for each slider box */
+.dropDownBox {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px; /* More padding for better alignment */
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensures content stretches evenly */
+    min-height: 80px; /* Allows content to expand properly */
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
+}
+
+/* Make sure labels are aligned left */
+.dropDownBox label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+    align-self: flex-start;
+}
+
+
+
+
+
+
+#chartContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.legend {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 200px;
+}
+
+/* Legend items */
+.legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+/* Colored circles in the legend */
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    border: 1px solid #555;
+}
+
+/* Align text in the legend */
+.legend-label {
+    flex-grow: 1;
+    text-align: left;
+    font-weight: bold;
+}
+
+.legend-count {
+    text-align: right;
+}
+
+/* Styling for total count */
+.legend-total {
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
 }

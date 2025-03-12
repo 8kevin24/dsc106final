@@ -1,58 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+
 <body>
-    <h1>What causes in-hospital fatalities?</h1>
-
-    <div id="writeup">
-        <p>Writeup:<br>
-        What we have so far:<br><br>
-        We currently have a visualization that essentially depicts summary statistics for our dataset quite nicely a choose-your-adventure sort of survey that is essentially a predictor model in disguise that predicts the outcome of a surgery (death or survival) based on the answers to the questionnaire like age, weight, height, etc. the static visualization will probably be ditched in the final draft, which begs the question of why include it in the first place, and the reason for doing so is because a lot of the functions that we used in project 3 for manipulating and transforming the data into aggregated summary statistics are going to be very useful in the final project with what we want to do, which is ultimately that questionnaire style format of data exploration. For example, we worked with normalized patient data a lot in project 3 and many of the functions are geared towards that, but for the final project, we’re going to be using both normalized data and the raw data, because normalizing the data can really speed up the efficiency/improve the accuracy of the prediction process, especially for a classifier like the one we are planning to use. As for the interaction, we’ve already managed to implement a very basic prediction model- the change in actual rate of survival/death isn’t very noticeable, but that’s because we’ve probably chosen the wrong medium to depict it(a pi graph) but you can see that it definitely changes if you set age to a really high number-the red portion jumps out a lot more. <br><br>
-
-        What will be the most challenging part:<br><br>
-        The most challenging part will probably be incorporating more of the variables into our questionnaire/survey because this will greatly increase our accuracy of the overall model while also allowing for more interaction than “fill out your weight age and height”. Currently, the code we have for incorporating just 3 factors is already A LOT OF WORK and we have no idea what it would look like if we start incorporating categorical data instead of numerical data. We were thinking of digging around to see if there was a way to incorporate a python script in a javascript file, which would make our life so much simpler since we could just call sklearn instead of actually performing the bins/estimation on our in raw javascript like we are doing right now(which is exhausting).  Also, for the questionnaire, what would the process even look like if we asked them about data that is pretty medically niche like “anesthesia type” or “open/clsoed surgery”-these factors play a heavy role in determining mortality rate, but we’d have to structure it in a friendly way and smooth manner so that the presentation isn’t jarred and full of medical jargon.
-        </p>
+    <link rel="stylesheet" href="input_page_style.css" />
+    
+    <!-- Intro section that will be displayed first -->
+    <div class="website_title">
+        <h1>Health Prognosis Tool</h1>
     </div>
 
-    <h2>Visualization</h2>
-    <p>This section contains a visual representation of the data. It shows key statistics related to in-hospital fatalities based on various factors. The visualization dynamically updates based on user input to reflect the effects of different patient attributes.</p>
-    
-    <div id="menu-container_dead_or_alive"></div>
-    <div id="chart"></div>
-    <dl id="patient-tooltip" class="info tooltip"></dl>
-    <div id="menu-container"></div> 
-
-    <h2>Patient Questionnaire</h2>
-    <p>Use the sliders below to input patient details such as age, height, and weight. Based on these values, the model will predict the likelihood of survival or fatality.</p>
-
-    <div id="controls">
-        <div id="ageSliderContainer">
-            <label>Age:</label>
-            <div id="ageSlider"></div>
-            <span id="ageMinValue"></span> - <span id="ageMaxValue"></span>
+    <div class="container"> 
+        <div class="question_container">
+            <!-- The intro content will go here initially -->
+            <div id="intro_section">
+                <h2>Welcome to our survival predictor!</h2>
+                <p>
+                    If you or a loved one have been diagnosed with a major sickness or are about to undergo a major surgery
+                    and are looking for some clarity on your future, this is the tool that you can use to help shed more
+                    light on your current situation.
+                </p>
+                <p>
+                    We know that in many cases, doctors give very vague survival chances, often framing things in vague
+                    terms like 5-year survival rates which are general and confusing, or stating that they do not know.
+                    They do this for a reason, fearing lawsuits and confrontation from the patient and their families,
+                    or sometimes, they simply don’t know as every patient is unique and their case different.
+                </p>
+                <p>
+                    However, this tool lets you know exactly what percentage of survival you have given your exact conditions
+                    based on existing patient data — with no qualms or misgivings about fear of being sued, since it is all
+                    technically just math in the background. Keep in mind that this is based on a machine learning model,
+                    and that computers do make mistakes as well.
+                </p>
+                <p>
+                    The dataset used to train this model comes from KoreanVitalDB — nearly 10,000 patients in this dataset
+                    were diagnosed with diseases ranging from kidney stones, wounds, to cancer, so there is a very reliable
+                    sample size and diversity of data.
+                </p>
+                <button id="start_button">Start</button>
+            </div>
         </div>
-
-        <div id="heightSliderContainer">
-            <label>Height:</label>
-            <div id="heightSlider"></div>
-            <span id="heightMinValue"></span> - <span id="heightMaxValue"></span>
-        </div>
-
-        <div id="weightSliderContainer">
-            <label>Weight:</label>
-            <div id="weightSlider"></div>
-            <span id="weightMinValue"></span> - <span id="weightMaxValue"></span>
-        </div>
+        <div class="graph"></div>
     </div>
 
-    <div id="piechart"></div>
-    
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="main.js" type="module"></script>
-
-    <!-- 引入 noUiSlider 樣式與 JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
-
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="main.js" type="module"></script>
-
-    <div id="menu-container"></div> 
+    <script type="module" src="input.js"></script>
 </body>
+</html>
