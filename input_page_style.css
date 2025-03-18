@@ -5,11 +5,28 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-image: linear-gradient(180deg, #03baf7 0%, #E0F7FA 100%);
+    background: linear-gradient(to bottom, #E0F7FA 0%, #0288D1 100%),
+                url("./inputs/input_image/inputpic1.jpg");
+    background-attachment: fixed; 
     font-family: Arial, sans-serif;
 }
 
+#intro_section p {
+    font-size: 25px;
+    line-height: 1.5;
+    color: #333; /* Darker gray for readability */
+    margin-bottom: 15px;
+}
+
+#intro_section h2 {
+    font-size: 45px;
+    font-weight: bold;
+    color: #002855; /* Dark blue for a professional look */
+    margin-bottom: 15px;
+}
+
 .container {
+    flex: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,14 +39,17 @@ body {
 }
 
 .question_container {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.80);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+    box-shadow: 0 25px 35px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 50%;
-    max-width: 500px;
+    max-width: 600px;
+    transition: background-color 1s ease-in-out;
+    margin-bottom: 70px;
 }
+
 
 .graph {
     width: 45%;
@@ -37,7 +57,9 @@ body {
     justify-content: center;
     align-items: center;
     height: 400px;
+    margin: 20px;
 }
+
 
 form {
     display: flex;
@@ -57,14 +79,21 @@ button {
     margin-top: 15px;
     padding: 10px 20px;
     border: none;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
     background-color: #007bff;
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
 }
 
 button:hover {
     background-color: #0262c9;
+    background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+    transform: scale(1.05);
 }
 
 /* For smaller screens, adjust the layout */
@@ -75,4 +104,63 @@ button:hover {
     .question_container, .graph {
         width: 100%;
     }
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 700; 
+    color: #002D62; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5; /* 增加行距，提升閱讀性 */
+    color: #333; /* 深灰色，對比度更好，避免刺眼的純黑 */
+}
+
+.diagnosis-label {
+    font-size: 20px;
+    font-weight: bold;
+    display: block; /* Make the label occupy a full line */
+    margin-bottom: 10px; /* Add spacing between the label and the input field */
+    text-align: center; /* Center the label text */
+}
+
+.website_title {
+    display: flex; /* Enables flexbox for horizontal alignment */
+    align-items: center; /* Vertically center logo and text */
+    justify-content: start; /* Align everything to the left */
+    gap: 15px; /* Space between logo and text */
+    padding-left: 20px; /* Move content slightly from left edge */
+}
+
+.logo {
+    width: 40px; /* Adjust the size as needed */
+    height: auto;
+}
+
+/* Smooth fade-in and fade-out effect */
+.fade-out {
+    opacity: 0;
+    transform: scale(0.95); /* Slight shrink effect */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+
+/* Initially hide new content */
+.hidden {
+    display: none;
+    opacity: 0;
 }

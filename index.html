@@ -14,42 +14,32 @@
     
     <!-- Intro section that will be displayed first -->
     <div class="website_title">
+        <img src="inputs/input_image/logo.jpg" alt="Health Prognosis Logo" class="logo">
         <h1>Health Prognosis Tool</h1>
+        <img src="inputs/input_image/logo.jpg" alt="Health Prognosis Logo" class="logo">
     </div>
 
     <div class="container"> 
         <div class="question_container">
             <!-- The intro content will go here initially -->
             <div id="intro_section">
-                <h2>Welcome to our survival predictor!</h2>
+                <h2>Welcome!</h2>
                 <p>
-                    If you or a loved one have been diagnosed with a major sickness or are about to undergo a major surgery
-                    and are looking for some clarity on your future, this is the tool that you can use to help shed more
-                    light on your current situation.
+                    Our advanced tool provides data-driven insights to estimate your post-surgical survival rate.
                 </p>
                 <p>
-                    We know that in many cases, doctors give very vague survival chances, often framing things in vague
-                    terms like 5-year survival rates which are general and confusing, or stating that they do not know.
-                    They do this for a reason, fearing lawsuits and confrontation from the patient and their families,
-                    or sometimes, they simply don’t know as every patient is unique and their case different.
-                </p>
-                <p>
-                    However, this tool lets you know exactly what percentage of survival you have given your exact conditions
-                    based on existing patient data — with no qualms or misgivings about fear of being sued, since it is all
-                    technically just math in the background. Keep in mind that this is based on a machine learning model,
-                    and that computers do make mistakes as well.
-                </p>
-                <p>
-                    The dataset used to train this model comes from KoreanVitalDB — nearly 10,000 patients in this dataset
-                    were diagnosed with diseases ranging from kidney stones, wounds, to cancer, so there is a very reliable
-                    sample size and diversity of data.
+                    To generate an accurate prediction, please enter key pre-surgical details, allowing us to analyze your case
+                    based on real-world medical data.
                 </p>
                 <button id="start_button">Start</button>
             </div>
         </div>
         <div class="graph"></div>
     </div>
-
+    
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
     <script type="module" src="input.js"></script>
+    <script type="module" src="./inputs/model.js"></script>
 </body>
 </html>

@@ -1,21 +1,35 @@
 body {
- 
     align-items: center;
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-image: linear-gradient(180deg, #03baf7 0%, #E0F7FA 100%);
-    font-family: Arial, sans-serif;
+    background-image:linear-gradient(to bottom, #E0F7FA 0%, #0288D1 100%);
+    font-family: 'Poppins', Arial, sans-serif;
+    overflow: hidden;
 }
+
 h1 {
     text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #023047;
+    margin-bottom: 5px;
 }
+
+p {
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 #gridContainer {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 20px;
-    padding: 20px;
-    height: 100%;
+    padding: 25px;
+    height: 90%;
 }
 
 .box {
@@ -26,16 +40,30 @@ h1 {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease-in-out;
 }
 
 #controlsContainer {
     width: 100%;
+    position: relative;
+    height: 95%; /* Take full height of the parent */
+    overflow-y: auto; /* Make only this section scrollable */
+    padding-right: 10px; /* Avoid touching right edge */
+    scrollbar-width: thin; /* Reduce scrollbar size */
+    scrollbar-color: #f5f5f5; /* Custom scrollbar colors */
 }
 
+/* Style the scrollbar */
+#controlsContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+
 /* Styling for each slider box */
-.sliderBox {
+.sliderBox, .dropDownBox {
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 15px; /* More padding for better alignment */
     margin-bottom: 10px;
     background-color: #f5f5f5;
@@ -46,10 +74,15 @@ h1 {
     min-height: 80px; /* Allows content to expand properly */
     width: 100%;
     box-sizing: border-box; /* Ensures padding doesn’t affect width */
+    transition: transform 0.2s ease-in-out;
+}
+.sliderBox:hover, .dropDownBox:hover {
+    transform: scale(1.02);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Make sure labels are aligned left */
-.sliderBox label {
+.sliderBox label, .dropDownBox label {
     font-weight: bold;
     margin-bottom: 5px;
     text-align: left;
@@ -62,6 +95,7 @@ h1 {
     width: 100%;
     padding-left: 5px;
     padding-right: 5px;
+    
 }
 
 .noUi-connect {
@@ -125,16 +159,16 @@ h1 {
 
 
 
-
-
-
 #chartContainer {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 95%;
+    overflow: hidden;
 }
+
 
 .legend {
     position: absolute;
@@ -190,4 +224,11 @@ h1 {
     width: 100%;
     text-align: center;
     font-weight: bold;
+}
+
+.info-icon {
+    cursor: help;
+    color: blue;
+    font-size: 14px;
+    margin-left: 5px;
 }

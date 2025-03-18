@@ -1,5 +1,7 @@
 let filteredData = [];
 let data = [];
+
+
 //let prevDeathCounts = [0,0]; //[death, alive]
 let sliderRange = {
     // 'age': [0,0],
@@ -121,14 +123,29 @@ function capitalizeFirstLetter(str) {
 
 
 function createPieChart(data) {
-    const width = 400;
-    const height = 400;
-    const radius = Math.min(width, height) / 2;
+    const maxRadius = 260; // Editable max radius
+    const width = maxRadius * 2.5;
+    const height = maxRadius * 2.5;
+    const totalPoints = 6388; // Total dataset points
+    const minRadius = 0; // Minimum size to avoid disappearing
 
+    // Calculate dynamic foreground pie radius based on area change
+    const dataSizeRatio = Math.max(data.length / totalPoints, 0.1); // Avoid zero radius
+    const foregroundRadius = minRadius + (maxRadius - minRadius) * Math.sqrt(dataSizeRatio); // Adjust by area change
+
+    // Clear previous elements
     d3.select("#piechart").select("svg").remove();
-    d3.select("#legend").html(""); // Clear old legend
-    d3.select("#piechart").select(".no-data-message").remove(); // Remove previous messages
+    d3.select("#top-left-legend").remove(); // Remove old floating legend
+    d3.select("#legend").html(""); // Clear static corner legend
+    d3.select("#piechart").select(".no-data-message").remove();
 
+    // === STATIC BACKGROUND PIE DATA (Full Dataset) ===
+    const backgroundData = [
+        { key: 0, value: 6331 }, // Survivals (99.11%)
+        { key: 1, value: 57 }    // Deaths (0.89%)
+    ];
+
+    // === DYNAMIC FOREGROUND PIE DATA (Based on input) ===
     const deathCounts = d3.rollup(data, v => v.length, d => d.death_inhosp);
     const pieData = Array.from(deathCounts, ([key, value]) => ({ key, value }));
 
@@ -141,16 +158,19 @@ function createPieChart(data) {
             .style("color", "#999")
             .style("font-size", "16px")
             .text("Not enough data");
-
-        return; // Stop execution and do not render the chart
+        return;
     }
 
-    const total = d3.sum(pieData, d => d.value); // Calculate total count
+    const total = d3.sum(pieData, d => d.value);
+    const matchPercentage = (data.length / totalPoints * 100).toFixed(2); // Percentage match
 
-    const color = d3.scaleOrdinal()
-        .domain([0, 1])
-        .range(["#4CAF50", "#F44336"]); // Green for Survivals, Red for Deaths
+    // Colors for foreground chart
+    const color = d3.scaleOrdinal().domain([0, 1]).range(["#4CAF50", "#F44336"]);
 
+    // Colors for background chart (faded)
+    const fadedColor = d3.scaleOrdinal().domain([0, 1]).range(["#A5D6A7", "#EF9A9A"]);
+
+    // Create SVG container
     const svg = d3.select("#piechart")
         .append("svg")
         .attr("width", width)
@@ -159,13 +179,44 @@ function createPieChart(data) {
         .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
     const pie = d3.pie().value(d => d.value);
-    const arc = d3.arc().innerRadius(0).outerRadius(radius);
+    const arcBackground = d3.arc().innerRadius(0).outerRadius(maxRadius); // Fixed background
+    const arcForeground = d3.arc().innerRadius(0).outerRadius(foregroundRadius); // Scaled by area
 
-    // Create legend dynamically with percentages and counts
+    // === STATIC BACKGROUND PIE CHART (Fixed Proportions) ===
+    const bgArcs = svg.selectAll(".bg-arc")
+        .data(pie(backgroundData))
+        .enter()
+        .append("g")
+        .attr("class", "bg-arc");
+
+    bgArcs.append("path")
+        .attr("fill", d => fadedColor(d.data.key))
+        .attr("opacity", 0.3)
+        .attr("d", arcBackground);
+
+    // === DYNAMIC FOREGROUND PIE CHART ===
+    const arcs = svg.selectAll(".arc")
+        .data(pie(pieData))
+        .enter()
+        .append("g")
+        .attr("class", "arc");
+
+    arcs.append("path")
+        .attr("fill", d => color(d.data.key))
+        .transition()
+        .duration(1000)
+        .attrTween("d", function(d) {
+            const interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+            return function(t) {
+                return arcForeground(interpolate(t));
+            };
+        });
+
+    // === STATIC CORNER LEGEND (Based on Foreground Pie Chart) ===
     const legend = d3.select("#legend");
 
     pieData.forEach(d => {
-        const label = d.key == 1 ? "Deaths" : "Survivals"; // Define category labels
+        const label = d.key == 1 ? "Deaths" : "Survivals";
         const percentage = ((d.value / total) * 100).toFixed(2) + "%";
 
         legend.append("div")
@@ -182,26 +233,26 @@ function createPieChart(data) {
         .attr("class", "legend-total")
         .html(`<strong>Total:</strong> ${total}`);
 
-    const arcs = svg.selectAll(".arc")
-        .data(pie(pieData))
-        .enter()
-        .append("g")
-        .attr("class", "arc");
+    // === STATIC TOP-LEFT LEGEND WITH ARROW ===
+    const topLeftLegend = d3.select("#piechart").append("div")
+        .attr("id", "top-left-legend")
+        .style("position", "absolute")
+        .style("top", "10px")
+        .style("left", "10px")
+        .style("background", "#fff")
+        .style("border", "1px solid #ccc")
+        .style("border-radius", "8px")
+        .style("padding", "10px")
+        .style("box-shadow", "2px 2px 10px rgba(0,0,0,0.2)");
 
-    arcs.append("path")
-        .attr("fill", d => color(d.data.key))
-        .transition()
-        .duration(1000)
-        .attrTween("d", function(d) {
-            const interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
-            return function(t) {
-                return arc(interpolate(t));
-            };
-        });
+    topLeftLegend.append("div")
+        .attr("class", "legend-text")
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .text(`Your scenario matches ${matchPercentage}% of the original data.`);
+
+
 }
-
-
-
 
 
 
@@ -220,10 +271,20 @@ function createSliders() {
             .attr("class", "sliderBox")
             .attr("id", `${attr}SliderContainer`);
 
-        // Add label with original key (not alias)
-        sliderBox.append("label")
+        // Create label with optional tooltip
+        const label = sliderBox.append("label")
             .attr("for", `${attr}Slider`)
-            .text(capitalizeFirstLetter(labelText) + " (" + AttrUnits[attr] + ')'); // Display original key as label
+            .text(capitalizeFirstLetter(labelText) + " (" + AttrUnits[attr] + ') '); // Display original key as label
+
+        // Add tooltip icon only for preop_hb and preop_plt
+        if (attr === 'preop_hb' || attr === 'preop_plt') {
+            label.append("span")
+                .attr("class", "info-icon")
+                .attr("title", attr === 'preop_hb' ? 
+                    "Preoperative Hemoglobin: A measure of hemoglobin levels before surgery (g/dL)." :
+                    "Preoperative Platelet Count: A measure of platelets in the blood before surgery (x1000/mcL).")
+                .html(" ℹ️");
+        }
 
         // Add slider div
         sliderBox.append("div")
@@ -257,10 +318,11 @@ function createSliders() {
         // Update sliderRange on change
         slider.noUiSlider.on("update", function (values) {
             sliderRange[attr] = values.map(v => Math.round(v));
-            updatePieChart(sliderRange,dropDownSelect);
+            updatePieChart(sliderRange, dropDownSelect);
         });
     });
 }
+
 
 function createDropdown() {
     const controlsContainer = d3.select("#controlsContainer"); // Select parent container
