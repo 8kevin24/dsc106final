@@ -377,7 +377,7 @@ function loadCateQuestion() {
 
                             questionContainer.innerHTML = `
                                 <h2>Your expected Survival rate is ${survivalRate.toFixed(2)}%.</h2>
-                                <a href="../piechart.html">More information</a>
+                                <a href="./piechart.html">More information</a>
                             `;
                             console.log("Final User Answers:", answers); // Log final answers for debugging
                         }, 500);
